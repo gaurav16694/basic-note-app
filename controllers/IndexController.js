@@ -36,6 +36,11 @@ exports.register = async (req,res)=>{
 	if(!req.body.password)
 		return res.json({status:0,message:'please provide password'});
 
+	const check = await User.findOne({ email: req.body.email });
+	 if(check)
+	 {
+	 	return res.json({status:0,message:'email already there'});
+	 }
 	var salt = bcrypt.genSaltSync(10);
 	var data={
 		email:req.body.email,
